@@ -1,0 +1,31 @@
+#background {
+  background-image: url(../images/zurich.JPG);
+}
+#mobile-overlay {
+  position: absolute;
+  background-color: black;
+  opacity: 0.4;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+#textbox div,
+#textbox h1,
+#textbox h2,
+#textbox li,
+#textbox ul {
+  display: block;
+}
+#textbox h1,
+#textbox h2 {
+  margin: 0;
+}
+#textbox ul {
+  padding-left: 0px;
+}
+#textbox li {
+  list-style: none;
+}
+#textbox li:after {
+  content: '';
+}

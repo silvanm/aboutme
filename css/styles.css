@@ -1,0 +1,4 @@
+@import url('styles-generic.css');
+@import url('styles-large.css') (min-width: 1280px);
+@import url('styles-tablet.css') (min-width: 500px) and (max-width: 1280px);
+@import url('styles-mobile.css') (max-width: 500px);
