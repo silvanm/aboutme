@@ -1,11 +1,17 @@
 <html lang="en">
 <head>
-    <title>Silvan Mühlemann</title>
+    <title>Silvan Mühlemann - Partner at Mühlemann&Popp</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400' rel='stylesheet' type='text/css'>
     <link href="css/styles.css" rel="stylesheet">
+    <meta property="og:image" content="http://xn--mhlemann-65a.ch/images/og-image-v2.jpg">
+    <meta property="og:title" content="Silvan Mühlemann - Zürich, Switzerland">
+    <meta property="og:url" content="http://xn--mhlemann-65a.ch">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1252">
+    <meta property="og:image:height" content="741">
 </head>
 <body>
 <script type="text/javascript">
@@ -24,12 +30,25 @@
     ga('create', 'UA-10357230-1', 'auto');
     ga('send', 'pageview');
 
+    /* Return IE Version. Feature detection does not work reliably because it confuses the Google Crawler */
+    function ie_ver(){
+        var iev=0;
+        var ieold = (/MSIE (\d+\.\d+);/.test(navigator.userAgent));
+        if (ieold) iev=parseInt(RegExp.$1);
+
+        var trident = !!navigator.userAgent.match(/Trident\/7.0/);
+        var rv=navigator.userAgent.indexOf("rv:11.0");
+
+        if (navigator.appVersion.indexOf("MSIE 10") != -1) iev=10;
+        if (trident&&rv!=-1) iev=11;
+
+        return iev;
+    }
+
     jQuery(function ($) {
 
-        var isModernBrowser = window.requestAnimationFrame;
-
-        if (!isModernBrowser) {
-            // nothing is happening for old browsers
+        // Test for ancient browsers (IE9 and older)
+        if (ie_ver() > 0 && ie_ver() <= 9) {
             // We even disable the style sheet so at least the page remains readable
             document.styleSheets[0].disabled = true;
             document.styleSheets[1].disabled = true;
@@ -37,17 +56,17 @@
         }
 
         if (window.matchMedia) {
-            var isMobile = window.matchMedia("(max-width:500px)").matches;
+            var wantMobileDesign = window.matchMedia("(max-width:500px)").matches;
         }
-
 
         $(window).on('load', function () {
             $('#activity-indicator').hide();
             $('#overlay').css('opacity', 0);
+
             // Start the zooming effect
             $('#background').addClass('zooming');
 
-            // Fade in effect
+            // Fade in effect for the text
             setTimeout(function () {
                 $('.appear-later').each(function (ix, elm) {
                     window.setTimeout(function () {
@@ -55,31 +74,24 @@
                     }, ix * 100)
                 })
                 $('#overlay').hide();
-            }, 3000) // Wait for the background image and the fonts to be loaded
+            }, 3000)
         })
 
-        var zoomingTimer;
+        var zoomingTimeout;
 
         $(window).on('resize load orientationchange', function () {
 
-            // Adjust the font size
-
-            // IE <=9 has issues with that font size
-            if (!isModernBrowser) {
-                return;
-            }
-
             var fontSize = 200;
             $('body').css('fontSize', fontSize + '%');
-            while ($('#textbox').width() > $(window).width() * (isMobile ? 0.9 : 1) - 15) {
+            while ($('#textbox').width() > $(window).width() * (wantMobileDesign ? 0.9 : 1) - 15) {
                 fontSize = parseInt(fontSize * 0.95)
                 $('body').css('fontSize', fontSize + '%');
             }
 
             // Restart the zooming when the page dimensions change
-            clearTimeout(zoomingTimer);
+            clearTimeout(zoomingTimeout);
             $('#background').removeClass('zooming');
-            zoomingTimer = setTimeout(function () {
+            zoomingTimeout = setTimeout(function () {
                 $('#background').addClass('zooming');
             }, 100)
         })
@@ -96,10 +108,10 @@
     <h1>Silvan Mühlemann</h1>
     <ul>
         <li class="appear-later">
-            Partner at <a href="http://www.muehlemann-popp.ch">Mühlemann&Popp</a>
+            CTO at <a href="http://www.muehlemann-popp.ch">Mühlemann&Popp</a>
         </li>
         <li class="hide-on-tablets appear-later">Geek-Dad</li>
-        <li class="hide-on-tablets appear-later">Triathlete</li>
+      <!--  <li class="hide-on-tablets appear-later">Triathlete</li> -->
     </ul>
     <div id="webpresences">
         <h2 class="appear-later">Me on the web</h2>
@@ -113,12 +125,16 @@
     <div id="projects">
         <h2 class="appear-later">Fun Projects</h2>
         <ul>
-            <li class="appear-later"><a href="/teambrowser">World Cup Team Browser</a></li>
-            <li class="appear-later no-dot-on-tablets"><a href="/penguins">Penguin Puzzle Solver</a></li>
-            <li class="hide-on-tablets appear-later"><a href="blog/">My (sleeping) Blog</a></li>
+            <li class="appear-later"><a href="/highwaysim">Highway-Simulator</a></li>
+            <li class="hide-on-tablets  appear-later"><a href="/kitchendisplay/?demo=1">Kitchendisplay</a></li>
+            <li class="hide-on-tablets  appear-later"><a href="https://www.facebook.com/silvan.muehlemann/videos/10155167313840719/?pnref=story">Presence detector</a></li>
+           <!-- <li class="hide-on-tablets appear-later"><a href="http://wateralarm.mühlemann.ch">Wateralarm</a></li> -->
+
+            <li class="hide-on-tablets appear-later no-dot-on-tablets"><a href="/penguins">Penguin Puzzle Solver</a></li>
+            <li class="appear-later no-dot-on-tablets"><a href="http://götterstammbaum.mühlemann.ch">Greek Gods Family Tree</a></li>
+           <!-- <li class="hide-on-tablets appear-later"><a href="http://blog.xn--mhlemann-65a.ch">My (sleeping) Blog</a></li> -->
         </ul>
     </div>
 </div>
-<script>
 </body>
 </html>
